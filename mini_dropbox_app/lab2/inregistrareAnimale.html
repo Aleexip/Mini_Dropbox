@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formular de inregistrare animale</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .formular {
+      background-color: white;
+      padding: 25px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      margin-top: 50px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e5c3f;
+      margin-top: 120px;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      font-size: 0.95em;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #2e5c3f;
+      outline: none;
+    }
+
+    .radio-group, .checkbox-group {
+      margin-top: 10px;
+    }
+
+    .radio-group label, .checkbox-group label {
+      font-weight: normal;
+      margin-right: 10px;
+    }
+
+    .butoane {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    input[type="submit"], input[type="reset"] {
+      width: 48%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"] {
+      background-color: #2e5c3f;
+      color: white;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #3b7550;
+    }
+
+    input[type="reset"] {
+      background-color: #c0392b;
+      color: white;
+    }
+
+    input[type="reset"]:hover {
+      background-color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <form class="formular">
+    <h1>Formular de inregistrare animale</h1>
+    <p>Completează acest formular pentru a inregistra animalul tau de companie la clinica noastră veterinara. Toate datele sunt confidentiale.</p>
+
+    <label for="numeStapan">Nume stapan:</label>
+    <input type="text" id="numeStapan" name="numeStapan" required>
+
+    <label for="telefon">Telefon:</label>
+    <input type="text" id="telefon" name="telefon" required>
+
+    <label for="numeAnimal">Nume animal:</label>
+    <input type="text" id="numeAnimal" name="numeAnimal" required>
+
+    <label for="specie">Specie:</label>
+    <select id="specie" name="specie">
+      <option value="caine">Caine</option>
+      <option value="pisica">pisica</option>
+      <option value="iepure">Iepure</option>
+      <option value="altul">Altul</option>
+    </select>
+
+    <label>Sexul animalului:</label>
+    <div class="radio-group">
+      <label><input type="radio" name="sex" value="mascul"> Mascul</label>
+      <label><input type="radio" name="sex" value="femela"> femela</label>
+    </div>
+
+    <label>Servicii dorite:</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="servicii" value="vaccinare"> Vaccinare</label>
+      <label><input type="checkbox" name="servicii" value="deparazitare"> Deparazitare</label>
+      <label><input type="checkbox" name="servicii" value="consult"> Consult</label>
+    </div>
+
+    <label for="observatii">Observatii:</label>
+    <textarea id="observatii" name="observatii" rows="4" placeholder="Scrie aici observatiile tale..."></textarea>
+
+    <div class="butoane">
+      <input type="submit" value="Trimite">
+      <input type="reset" value="Resetează">
+    </div>
+  </form>
+</body>
+</html>
