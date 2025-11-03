@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercitiul 3</title>
+</head>
+<body>
+    <script>
+        
+        let a = 15;
+        let b = 4;
+        let c = 12;
+
+    
+        let max, mid, min;
+
+        if (a >= b && a >= c) {
+            max = a;
+            if (b >= c) {
+                mid = b;
+                min = c;
+            } else {
+                mid = c;
+                min = b;
+            }
+        } else if (b >= a && b >= c) {
+            max = b;
+            if (a >= c) {
+                mid = a;
+                min = c;
+            } else {
+                mid = c;
+                min = a;
+            }
+        } else {
+            max = c;
+            if (a >= b) {
+                mid = a;
+                min = b;
+            } else {
+                mid = b;
+                min = a;
+            }
+        }
+
+        console.log(max, mid, min);
+    </script>
+</body>
+</html>
