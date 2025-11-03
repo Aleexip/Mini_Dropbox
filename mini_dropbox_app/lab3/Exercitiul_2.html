@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercitiul 2</title>
+</head>
+<body>
+    <script>
+      
+        let tranzactie1 = true;
+        let tranzactie2 = false;
+
+        
+        if (tranzactie1) {
+            console.log("Tranzactie acceptata!");
+        }
+
+        if (tranzactie2) {
+            console.log("Tranzactie acceptata!");
+        } else {
+            console.log("Tranzactie refuzata!");
+        }
+
+      /*
+        Comportament observat:
+        - Pentru tranzactie1, având valoarea true, instrucțiunea IF este îndeplinită și se afișează mesajul "Tranzactie acceptata!".
+        - Pentru tranzactie2, având valoarea false, condiția IF nu este adevărată, astfel se execută ramura ELSE și se afișează "Tranzactie refuzata!".
+
+
+    Explicatie:
+    In JavaScript, instructiunea IF verifică dacă expresia evaluată este true.
+    - O valoare true duce la executarea codului din blocul IF
+    - O valoare false determină ignorarea IF-ului și executarea blocului ELSE, dacă acesta este prezent
+    */
+    </script>
+</body>
+</html>
