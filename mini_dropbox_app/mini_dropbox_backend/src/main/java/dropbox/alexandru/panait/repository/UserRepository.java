@@ -1,6 +1,6 @@
 package dropbox.alexandru.panait.repository;
 
-import com.minidropbox.model.User;
+import dropbox.alexandru.panait.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

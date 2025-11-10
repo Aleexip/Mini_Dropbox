@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": [
+        "mini_dropbox_app/mini_dropbox_backend/src/main/java/dropbox/alexandru/panait",
+        "mini_dropbox_app/mini_dropbox_backend/src/main",
+        "mini_dropbox_app"
+    ]
+}

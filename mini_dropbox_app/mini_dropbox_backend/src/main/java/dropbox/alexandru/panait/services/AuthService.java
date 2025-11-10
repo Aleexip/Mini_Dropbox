@@ -1,7 +1,7 @@
-package com.dropbox.alexandru.panait.service;
+package dropbox.alexandru.panait.services;
 
-import com.minidropbox.model.User;
-import com.minidropbox.repository.UserRepository;
+import dropbox.alexandru.panait.model.User;
+import dropbox.alexandru.panait.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
