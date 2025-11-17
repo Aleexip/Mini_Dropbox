@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Detalii produs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Detalii produs</h1>
+      <p class="small">Apasa butonul pentru a afisa sau ascunde detaliile produsului.</p>
+    </div>
+
+    <div class="card">
+      <h2>Telefon X Pro</h2>
+      <img class="product-image" src="https://s13emagst.akamaized.net/products/40685/40684412/images/res_587e5e15698135f41c0340e80496bf67.jpg?width=720&height=720&hash=C4FD117245354CED278B13039E0293CF" alt="Imagine produs">
+
+      <button id="btnDetalii" class="button">Afiseaza detalii</button>
+
+      <div id="detalii" class="ascuns" style="margin-top:12px;">
+        <p>Telefon X Pro vine cu ecran AMOLED, procesor rapid si camera performanta pentru fotografii nocturne.</p>
+        <p>Informatiile sunt valabile la data: <span id="dataProdus"></span>.</p>
+      </div>
+    </div>
+
+    <p class="footer">Laborator 4 - DOM</p>
+  </div>
+
+  <script src="detalii_script.js"></script>
+</body>
+</html>
