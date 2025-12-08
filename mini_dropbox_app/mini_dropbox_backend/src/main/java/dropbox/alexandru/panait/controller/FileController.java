@@ -1,28 +1,47 @@
 package dropbox.alexandru.panait.controller;
 
 import dropbox.alexandru.panait.model.FileEntity;
+import dropbox.alexandru.panait.model.User;
+import dropbox.alexandru.panait.repository.UserRepository;
 import dropbox.alexandru.panait.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpHeaders;
 
-import org.springframework.http.MediaType;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/api/files") // all file-related endpoints will start with /api/files
-@CrossOrigin(origins = "*") // Allows connection from any frontend (local HTML/JS)
+@RequestMapping("/api/files")
+@CrossOrigin(origins = "*")
 public class FileController {
 
     @Autowired
     private FileService fileService;
 
+    // We need the UserRepository to fetch the user by ID
+    @Autowired
+    private UserRepository userRepository;
+
+    // @RequestParam is used to get data from the query string or form data
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("userId") Long userId) {
         try {
-            fileService.store(file);
+            // 1. Looking for the user in the database
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+            // 2. Store the file using the FileService
+            fileService.store(file, user);
+
             return ResponseEntity.status(HttpStatus.OK)
                     .body("File uploaded successfully: " + file.getOriginalFilename());
         } catch (Exception e) {
@@ -33,14 +52,23 @@ public class FileController {
 
     @GetMapping("/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable Long id) {
-        FileEntity fileEntity = fileService.getFile(id);
+        try {
+            // 1. We get the FileEntity from the database
+            FileEntity fileEntity = fileService.getFile(id);
 
-        return ResponseEntity.ok()
-                // we set the content type to the one stored in the DB
-                .contentType(MediaType.parseMediaType(fileEntity.getType()))
-                // This header forces the browser to open the "Save As" window
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getName() + "\"")
-                // The response body is exactly the byte array from the database
-                .body(fileEntity.getData());
+            // 2. Get the path on disk
+            Path path = Paths.get(fileEntity.getFilePath());
+
+            // 3. Read the bytes directly from disk
+            byte[] data = Files.readAllBytes(path);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(fileEntity.getType()))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getName() + "\"")
+                    .body(data);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

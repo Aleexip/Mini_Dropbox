@@ -1,6 +1,7 @@
 package dropbox.alexandru.panait.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "files")
@@ -14,6 +15,16 @@ public class FileEntity {
 
     private String type;
 
+    private String filePath;
+
+    private Long size;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore // Prevents circular references during JSON serialization
+
+    private User owner;
+
     // @Lob tells to the JPA provider that this field should be treated as a Large
     // Object.
     // In Postgres, this is important for binary files
@@ -25,14 +36,15 @@ public class FileEntity {
     }
 
     // Constructor
-    public FileEntity(String name, String type, byte[] data) {
+    public FileEntity(String name, String type, String filePath, Long size, User owner) {
         this.name = name;
         this.type = type;
-        this.data = data;
+        this.filePath = filePath;
+        this.size = size;
+        this.owner = owner;
     }
 
-    // Getters and Setters (REQUIRED)
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -57,11 +69,27 @@ public class FileEntity {
         this.type = type;
     }
 
-    public byte[] getData() {
-        return data;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
