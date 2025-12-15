@@ -1,13 +1,19 @@
 package dropbox.alexandru.panait.controller;
 
-import dropbox.alexandru.panait.model.User;
-import dropbox.alexandru.panait.repository.UserRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import dropbox.alexandru.panait.model.User;
+import dropbox.alexandru.panait.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -17,6 +23,9 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // --- REGISTER ---
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
@@ -24,6 +33,10 @@ public class AuthController {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists!");
         }
+
+        // 1. Encode the password
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 
         // 2. Save the new user (using simple text for password for now)
         userRepository.save(user);
@@ -39,8 +52,7 @@ public class AuthController {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             // 2. Verify the password
-            if (user.getPassword().equals(loginData.getPassword())) {
-                // Return the User object (so we can get the ID in frontend)
+            if (passwordEncoder.matches(loginData.getPassword(), user.getPassword())) {
                 return ResponseEntity.ok(user);
             }
         }
