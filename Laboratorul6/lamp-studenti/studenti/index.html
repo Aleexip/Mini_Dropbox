@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog Studenti - Laborator 6</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+        .container { border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+        input, button { display: block; width: 100%; margin-bottom: 10px; padding: 8px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Adauga Student</h2>
+    <form id="studentForm">
+        <input type="text" id="nume" placeholder="Nume student" required>
+        <input type="number" id="an" placeholder="Anul de studiu (1-4)" min="1" max="4" required>
+        <input type="number" id="media" placeholder="Media generală" step="0.01" required>
+        <button type="submit">Salveaza Student</button>
+    </form>
+    <p id="mesaj" style="color: green;"></p>
+</div>
+
+<div class="container" style="margin-top: 20px;">
+    <h2>Lista Studenti</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nume</th>
+                <th>An</th>
+                <th>Media</th>
+            </tr>
+        </thead>
+        <tbody id="tabelStudenti">
+            </tbody>
+    </table>
+</div>
+
+<script>
+
+    function incarcaStudenti() {
+        fetch('api.php')
+            .then(response => response.json()) 
+            .then(data => {
+                const tbody = document.getElementById('tabelStudenti');
+                tbody.innerHTML = ''; 
+                
+                data.forEach(student => {
+                    const row = `<tr>
+                        <td>${student.nume}</td>
+                        <td>${student.an}</td>
+                        <td>${student.media}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(err => console.error('Eroare la încarcare:', err));
+    }
+
+ 
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+
+        const nume = document.getElementById('nume').value;
+        const an = document.getElementById('an').value;
+        const media = document.getElementById('media').value;
+
+        const studentNou = { nume: nume, an: an, media: media };
+
+    
+        fetch('api.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(studentNou) 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('mesaj').innerText = "Student adaugat cu succes!";
+                document.getElementById('studentForm').reset(); 
+                incarcaStudenti();
+            } else {
+                alert('Eroare: ' + data.message);
+            }
+        })
+        .catch(err => console.error('Eroare la trimitere:', err));
+    });
+
+    
+    incarcaStudenti();
+</script>
+
+</body>
+</html>
