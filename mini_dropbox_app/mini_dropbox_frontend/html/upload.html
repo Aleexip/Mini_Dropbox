@@ -3,30 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File</title>
+    <title>Upload File - Mini Dropbox</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+   
 </head>
 <body>
     <header>
-        <h1>Mini Dropbox</h1>
+        <h1><i class="fa-solid fa-cloud"></i> Mini Dropbox</h1>
         <nav>
             <a href="dashboard.html">Dashboard</a>
             <a href="files.html">My files</a>
             <a href="profile.html">Profile</a>
-            <a href="../../logout.php">Logout</a>
+            <a href="#" id="logoutBtn" style="color: #ffcccc;">Logout</a>
         </nav>
     </header>
 
-    <main class="upload">
-        <h2>Upload file</h2>
-        <form action="../../upload.php" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <button type="submit">Upload</button>
-        </form>
+    <main>
+        <div class="upload-wrapper">
+            <h2>Upload a New File</h2>
+            <p style="margin-bottom: 20px; color: #666;">Choose a file to store securely.</p>
+            
+            <form id="uploadForm" enctype="multipart/form-data">
+                <label for="fileInput" class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <p class="upload-text">Click here to <span>browse</span> your files</p>
+                    
+                    <div id="fileNameDisplay"></div>
+                </label>
+
+                <input type="file" name="file" id="fileInput" required>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="fa-solid fa-upload"></i> Start Upload
+                </button>
+            </form>
+        </div>
     </main>
 
     <footer>
-        <p>&copy;Mini Dropbox 2025 </p>
+        <p>&copy; 2025 Mini Dropbox | Secure Cloud Storage</p>
     </footer>
+
+    <script src="../js/upload.js"></script>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const submitBtn = document.getElementById('submitBtn');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                // Display the selected file name
+                fileNameDisplay.textContent = "Selected: " + this.files[0].name;
+                fileNameDisplay.style.display = "inline-block";
+                
+                //Activate the submit button
+                submitBtn.classList.add('active');
+            } else {
+                fileNameDisplay.style.display = "none";
+                submitBtn.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>

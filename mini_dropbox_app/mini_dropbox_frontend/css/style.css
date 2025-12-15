@@ -314,3 +314,85 @@ body {
     font-size: 0.9rem;
   }
 }
+/* Stiluri pentru pagina de UPLOAD (le pui in style.css) */
+
+.upload-wrapper {
+    max-width: 600px; /* Am mărit lățimea maximă */
+    margin: 4rem auto;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.upload-area {
+    border: 3px dashed #4f46e5; /* Chenar mai vizibil */
+    background-color: #f8fafc;
+    border-radius: 15px;
+    padding: 3rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: block; /* Asiguram ca ia spatiul corect */
+}
+
+.upload-area:hover {
+    background-color: #eef2ff;
+    border-color: #4338ca;
+    transform: translateY(-2px);
+}
+
+.upload-icon {
+    font-size: 3.5rem; /* Iconita mai mare */
+    color: #4f46e5;
+    margin-bottom: 1rem;
+}
+
+.upload-text {
+    color: #555;
+    font-weight: 500;
+}
+
+/* Ascundem input-ul standard urat */
+#fileInput {
+    display: none;
+}
+
+/* Zona unde apare numele fisierului selectat */
+#fileNameDisplay {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #333;
+    /* Am simplificat background-ul ca sa nu incurce */
+    background: transparent; 
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+/* Butonul de submit */
+.btn-submit {
+    width: 100%;
+    padding: 15px; /* Mai mare */
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: not-allowed; /* Initial dezactivat */
+    transition: 0.3s;
+    opacity: 0.6; 
+    pointer-events: none;
+}
+
+.btn-submit.active {
+    opacity: 1;
+    cursor: pointer;
+    pointer-events: all;
+    background: #5b21b6;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+}
