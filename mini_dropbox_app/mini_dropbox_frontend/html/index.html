@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     
     <style>
-        /* Stilurile tale existente */
+       
         .upload-container {
             margin-top: 30px;
             padding: 20px;
@@ -18,17 +18,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .upload-container h3 { margin-top: 0; color: #333; }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
-        .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn-upload { background-color: #0061fe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
-        .btn-upload:hover { background-color: #004ecc; }
-        #message { margin-top: 10px; font-weight: bold; }
-        .success { color: green; }
-        .error { color: red; }
-
-        /* --- STILURI NOI PENTRU TABEL --- */
         .files-container {
             margin-top: 40px;
             max-width: 800px;
@@ -36,68 +25,60 @@
             margin-right: auto;
             text-align: left;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .btn-download { text-decoration: none; color: #0061fe; font-weight: bold; border: 1px solid #0061fe; padding: 5px 10px; border-radius: 4px; }
+        .btn-download:hover { background-color: #0061fe; color: white; }
+
+       
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f8f9fa;
-        }
-        .btn-download {
-            text-decoration: none;
-            color: #0061fe;
-            font-weight: bold;
-            border: 1px solid #0061fe;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
-        .btn-download:hover {
-            background-color: #0061fe;
+        .btn-logout {
+            background-color: #dc3545; 
             color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <header>
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem;">
         <h1>Mini Dropbox</h1>
+        
+        <div id="userSection" class="user-info" style="display: none;">
+            <span id="welcomeText" style="color: white; font-weight: bold;"></span>
+            <a href="#" id="logoutBtn" class="btn-logout">Logout</a>
+        </div>
+        
+        <nav id="guestNav">
+            <a href="login.html">Login</a>
+        </nav>
     </header>
 
     <main class="home">
         <div class="home-container" style="text-align: center;">
-            <h2>Welcome to Mini Dropbox</h2>
-            <p>Manage your files fast and easy directly from your browser.</p>
+            <h2 id="mainTitle">Welcome</h2>
             
-            <div class="home-buttons">
-                <a href="register.html" class="btn">Register</a>
-                <a href="login.html" class="btn">Login</a>
-            </div>
-
             <div class="upload-container">
-                <h3>Test Upload Area</h3>
+                <h3>Upload New File</h3>
                 
                 <div class="form-group">
-                    <label for="userId">User ID (from database):</label>
-                    <input type="text" id="userId" value="1" placeholder="Ex: 1" onchange="loadFiles()"> 
-                    </div>
-
-                <div class="form-group">
                     <label for="fileInput">Choose file:</label>
-                    <input type="file" id="fileInput">
+                    <input type="file" id="fileInput" style="margin-top: 10px;">
                 </div>
 
-                <button class="btn-upload" onclick="uploadFile()">Upload Now</button>
+                <button class="btn-upload" id="uploadBtn" style="margin-top: 15px; background-color: #0061fe; color: white; padding: 10px 20px; border: none; cursor: pointer;">Upload Now</button>
                 <p id="message"></p>
             </div>
 
             <div class="files-container">
-                <h3>My Files</h3>
+                <h3>📂 My Files</h3>
                 <table id="filesTable">
                     <thead>
                         <tr>
@@ -119,7 +100,6 @@
         <p>&copy; 2025 Mini Dropbox</p>
     </footer>
 
-    <script src ="../js/index.js">
-       </script>
+    <script src="../js/index.js"></script>
 </body>
 </html>
