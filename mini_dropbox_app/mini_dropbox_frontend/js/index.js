@@ -64,10 +64,16 @@ async function loadFiles() {
                         <td>${file.type}</td>
                         <td>${sizeKB} KB</td>
                         <td style="text-align: center;">
-                            <a href="${downloadUrl}" class="btn-download">⬇ Download</a>
+                            <a href="${downloadUrl}" class="btn-download" style="margin-right: 10px;">⬇ Download</a>
+                            
+                            <button onclick="deleteFile(${file.id})" 
+                                    style="background-color: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+                                🗑️ Delete
+                            </button>
                         </td>
                     </tr>
                 `;
+
         tableBody.innerHTML += row;
       });
     }
@@ -111,7 +117,28 @@ async function uploadFile() {
     }
   } catch (error) {
     console.error(error);
-    messageEl.textContent = "Nu pot contacta serverul.";
+    messageEl.textContent = "Impossible to connect to server.";
     messageEl.style.color = "red";
+  }
+}
+async function deleteFile(fileId) {
+  if (!confirm("Are you sure you want to delete this file?")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:8082/api/files/${fileId}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      // Reload the file list after deletion
+      loadFiles();
+    } else {
+      alert("Error deleting file.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Impossible to connect to server.");
   }
 }

@@ -31,11 +31,11 @@ public class FileService {
             // If the folder does not exist, create it
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
-            throw new RuntimeException("Nu s-a putut crea folderul pentru upload.", ex);
+            throw new RuntimeException("Couldn't create the directory where the uploaded files will be stored.", ex);
         }
     }
 
-    // New method to get all files for a specific user
+    // method to get all files for a user
     public List<FileEntity> getAllFiles(Long userId) {
         return fileRepository.findByOwnerId(userId);
     }
@@ -71,8 +71,24 @@ public class FileService {
         return fileRepository.save(fileEntity);
     }
 
+    // Method to get a file by its id
     public FileEntity getFile(Long id) {
         return fileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("File not found with id: " + id));
     }
-}
+
+    // Method to delete a file by its id
+    public void deleteFile(Long fileId) throws IOException {
+        // 1. Find the file entity in the DB
+        FileEntity fileEntity = getFile(fileId);
+
+        // 2. Take the file path from the entity
+        Path filePath = Paths.get(fileEntity.getFilePath());
+
+        // 3. Delete the file from the file system
+        Files.deleteIfExists(filePath);
+
+        // 4. Delete the record from the Database
+        fileRepository.delete(fileEntity);
+    }
+}           

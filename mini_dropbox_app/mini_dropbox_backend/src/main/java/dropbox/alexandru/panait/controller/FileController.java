@@ -73,9 +73,23 @@ public class FileController {
         }
     }
 
+    // Get all files for a specific user
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<FileEntity>> getAllFiles(@PathVariable Long userId) {
         List<FileEntity> files = fileService.getAllFiles(userId);
         return ResponseEntity.ok(files);
+    }
+
+    // Delete a file by its id
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteFile(@PathVariable Long id) {
+        try {
+            fileService.deleteFile(id);
+            return ResponseEntity.ok("File deleted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Could not delete file: " + e.getMessage());
+        }
     }
 }
