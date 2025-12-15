@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -32,6 +33,11 @@ public class FileService {
         } catch (Exception ex) {
             throw new RuntimeException("Nu s-a putut crea folderul pentru upload.", ex);
         }
+    }
+
+    // New method to get all files for a specific user
+    public List<FileEntity> getAllFiles(Long userId) {
+        return fileRepository.findByOwnerId(userId);
     }
 
     public FileEntity store(MultipartFile file, User owner) throws IOException {

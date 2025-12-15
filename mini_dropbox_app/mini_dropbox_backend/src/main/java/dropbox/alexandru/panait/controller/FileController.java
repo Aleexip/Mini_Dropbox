@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/files")
@@ -70,5 +71,11 @@ public class FileController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<FileEntity>> getAllFiles(@PathVariable Long userId) {
+        List<FileEntity> files = fileService.getAllFiles(userId);
+        return ResponseEntity.ok(files);
     }
 }

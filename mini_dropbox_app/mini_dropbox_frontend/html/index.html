@@ -7,56 +7,61 @@
     <link rel="stylesheet" href="../css/style.css">
     
     <style>
+        /* Stilurile tale existente */
         .upload-container {
             margin-top: 30px;
             padding: 20px;
             background-color: #fff;
-            border: 2px dashed #0061fe; /* Dropbox Blue border */
+            border: 2px dashed #0061fe;
             border-radius: 10px;
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
-        .upload-container h3 {
-            margin-top: 0;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .btn-upload {
-            background-color: #0061fe;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-        .btn-upload:hover {
-            background-color: #004ecc;
-        }
-        #message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
+        .upload-container h3 { margin-top: 0; color: #333; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn-upload { background-color: #0061fe; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; }
+        .btn-upload:hover { background-color: #004ecc; }
+        #message { margin-top: 10px; font-weight: bold; }
         .success { color: green; }
         .error { color: red; }
+
+        /* --- STILURI NOI PENTRU TABEL --- */
+        .files-container {
+            margin-top: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        .btn-download {
+            text-decoration: none;
+            color: #0061fe;
+            font-weight: bold;
+            border: 1px solid #0061fe;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .btn-download:hover {
+            background-color: #0061fe;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -75,12 +80,12 @@
             </div>
 
             <div class="upload-container">
-                <h3> Test Upload Area</h3>
+                <h3>Test Upload Area</h3>
                 
                 <div class="form-group">
                     <label for="userId">User ID (from database):</label>
-                    <input type="text" id="userId" value="1" placeholder="Ex: 1">
-                </div>
+                    <input type="text" id="userId" value="1" placeholder="Ex: 1" onchange="loadFiles()"> 
+                    </div>
 
                 <div class="form-group">
                     <label for="fileInput">Choose file:</label>
@@ -90,62 +95,31 @@
                 <button class="btn-upload" onclick="uploadFile()">Upload Now</button>
                 <p id="message"></p>
             </div>
+
+            <div class="files-container">
+                <h3>My Files</h3>
+                <table id="filesTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Size (KB)</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filesListBody">
+                        </tbody>
+                </table>
             </div>
+
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2025 Mini Dropbox</p>
     </footer>
 
-    <script>
-        async function uploadFile() {
-            const fileInput = document.getElementById('fileInput');
-            const userIdInput = document.getElementById('userId');
-            const messageEl = document.getElementById('message');
-
-            // 1. Validare
-            if(fileInput.files.length === 0) {
-                messageEl.textContent = " Please select a file!";
-                messageEl.className = "error";
-                return;
-            }
-
-            const userId = userIdInput.value;
-            if(!userId) {
-                messageEl.textContent = " Enter a valid User ID!";
-                messageEl.className = "error";
-                return;
-            }
-
-            // 2. Prepare data (FormData)
-            const formData = new FormData();
-            formData.append("file", fileInput.files[0]);
-            formData.append("userId", userId);
-
-            messageEl.textContent = " Loading...";
-            messageEl.className = "";
-
-            try {
-                // 3. Send the requestto backend
-                const response = await fetch('http://localhost:8082/api/files/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    const text = await response.text(); // Succes message from server
-                    messageEl.textContent = " ok" + text;
-                    messageEl.className = "success";
-                } else {
-                    messageEl.textContent = " Eroare server: " + response.status;
-                    messageEl.className = "error";
-                }
-            } catch (error) {
-                console.error(error);
-                messageEl.textContent = " Backend didn't run";
-                messageEl.className = "error";
-            }
-        }
-    </script>
+    <script src ="../js/index.js">
+       </script>
 </body>
 </html>
