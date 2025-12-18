@@ -1,40 +1,62 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Mini Dropbox</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Mini Dropbox</h1>
-        <nav>
-            <a href="upload.html">Upload</a>
-            <a href="files.html">My files</a>
-            <a href="profile.html">Profile</a>
-            <a href="#" id = "logoutBtn">Logout</a>
-        </nav>
+        <div class="header-content">
+            <h1><i class="fa-solid fa-cloud"></i> Mini Dropbox</h1>
+            <nav>
+                <a href="upload.html"><i class="fa-solid fa-file-upload"></i> Upload</a>
+                <a href="files.html"><i class="fa-solid fa-folder-open"></i> My files</a>
+                <a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profile</a>
+                <a href="#" id="logoutBtn" class="logout-link">Logout</a>
+            </nav>
+        </div>
     </header>
 
-    <main class="dashboard">
-        <h2>Welcome!</h2>
+    <main class="dashboard-container">
+        <header class="welcome-header">
+            <h2 id="welcomeText">Welcome back!</h2>
+        
+        </header>
+
         <div class="overview">
-            <div class="card">
-                <h3>Free space</h3>
-                <p>1.2 GB of 5 GB</p>
+            <div class="card storage-card">
+                <div class="card-icon"><i class="fa-solid fa-hard-drive"></i></div>
+                <div class="card-info">
+                    <h3>Storage Used</h3>
+                    <p id="storageText">Calculating...</p>
+                    <div class="progress-container">
+                        <div id="storageBar" class="progress-bar"></div>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Uploaded files</h3>
-                <p>12 files</p>
+
+            <div class="card files-card">
+                <div class="card-icon"><i class="fa-solid fa-file-lines"></i></div>
+                <div class="card-info">
+                    <h3>Total Files</h3>
+                    <p id="fileCountText">0 files</p>
+                    <span class="sub-text">Recently synced</span>
+                </div>
             </div>
         </div>
 
-        <a href="upload.html" class="btn">Upload file</a>
+        <div class="quick-actions">
+            <a href="upload.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Upload New File</a>
+            <a href="files.html" class="btn btn-secondary">View All Files</a>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; Mini Dropbox 2025</p>
+        <p>&copy; Mini Dropbox 2025 | Secured with BCrypt</p>
     </footer>
 
     <script src="../js/dashboard.js"></script>

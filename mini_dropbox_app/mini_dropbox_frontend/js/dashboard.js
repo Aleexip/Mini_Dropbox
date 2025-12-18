@@ -18,21 +18,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             const files = await response.json();
             
-            // Calculate total size and count
-            const fileCount = files.length;
-            let totalSizeBytes = 0;
-            files.forEach(f => totalSizeBytes += f.size);
-
-            // Convert size to MB
-            const totalSizeMB = (totalSizeBytes / (1024 * 1024)).toFixed(2);
+           // Calculate statistics
+            const count = files.length;
+            const totalBytes = files.reduce((acc, file) => acc + file.size, 0);
+            const totalMB = (totalBytes / (1024 * 1024)).toFixed(2);
             
-         
-            // Update the dashboard cards after fetching data
-            const cards = document.querySelectorAll('.card p');
-            if(cards.length >= 2) {
-                cards[0].textContent = `${totalSizeMB} MB of 5 GB`; // Space
-                cards[1].textContent = `${fileCount} files`;        // Count
-            }
+            // Assuming a storage limit of 500 MB
+            const limitMB = 500; 
+            const percent = Math.min((totalMB / limitMB) * 100, 100);
+
+            // Update UI
+            document.getElementById('fileCountText').textContent = `${count} fișiere`;
+            document.getElementById('storageText').textContent = `${totalMB} MB / ${limitMB} MB`;
+            document.getElementById('storageBar').style.width = `${percent}%`;
+            
+            // Change color based on usage
+            if (percent > 80) document.getElementById('storageBar').style.background = '#ef4444';
         }
     } catch (error) {
         console.error("Error at loading", error);

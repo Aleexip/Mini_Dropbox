@@ -1,0 +1,132 @@
+/* Primary container */
+.dashboard-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.welcome-header {
+    background-color: #4f46e5; 
+    padding: 3rem 2rem;       
+    border-radius: 20px;      
+    text-align: center;        
+    
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    margin-bottom: 3rem;     
+    min-height: 150px;         
+}
+
+.welcome-header h2 {
+    font-size: 2.2rem;
+    color: #ffffff;
+    
+}
+
+
+
+/* Cards  */
+.overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Card Icons */
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.storage-card .card-icon {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.files-card .card-icon {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+.card-info h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+}
+
+.card-info p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Progress Bar for Storage */
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    width: 0%; /* From JavaScript */
+    transition: width 1s ease-in-out;
+}
+
+/* Quick Actions Buttons */
+.quick-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-secondary {
+    background: white;
+    color: #4f46e5;
+    border: 2px solid #4f46e5;
+}
+
+.btn-secondary:hover {
+    background: #f8fafc;
+    color: #4338ca;
+}
+
+.logout-link {
+    color: #fda4af !important;
+}
+
+.logout-link:hover {
+    color: #f43f5e !important;
+    background: rgba(244, 63, 94, 0.1) !important;
+}
